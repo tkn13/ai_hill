@@ -3,6 +3,7 @@ import java.util.Collections;
 
 public class Puzzle8 {
     int[][] board;
+    int boardSize;
     Puzzle8 pervious;
     Puzzle8 next;
     ArrayList<Puzzle8> possibleState = new ArrayList<>();
@@ -10,25 +11,51 @@ public class Puzzle8 {
 
     public Puzzle8(int[][] board) {
         this.board = board;
+        boardSize = board.length;
     }
 
     public Puzzle8(int[][] board, Puzzle8 pervious) {
         this.board = board;
         this.pervious = pervious;
+        boardSize = board.length;
     }
 
     public Puzzle8(){
+        boardSize = 3;
         ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < boardSize*boardSize; i++) {
             list.add(i);
         }
         Collections.shuffle(list);
-        board = new int[3][3];
+        board = new int[boardSize][boardSize];
         for(int i = 0; i < board.length; i++){
             for(int j = 0; j < board.length; j++){
-                board[i][j] = list.get(i * 3 + j);
+                board[i][j] = list.get(i * boardSize + j);
             }
         }
+    }
+
+    public Puzzle8(int boardSize){
+        this.boardSize = boardSize;
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < boardSize*boardSize; i++) {
+            list.add(i);
+        }
+        Collections.shuffle(list);
+        board = new int[boardSize][boardSize];
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board.length; j++){
+                board[i][j] = list.get(i * boardSize + j);
+            }
+        }
+    }
+
+    public Puzzle8 deepCopyPuzzle8(Puzzle8 src){
+        int[][] newBoard = new int[src.boardSize][src.boardSize];
+        for(int i = 0; i < src.board.length; i++){
+            System.arraycopy(src.board[i], 0, newBoard[i], 0, src.board[i].length);
+        }
+        return new Puzzle8(newBoard);
     }
 
     public boolean isCanMoveUp(){
@@ -76,7 +103,7 @@ public class Puzzle8 {
     }
     
     public int[][] moveUp(){
-        int[][] newBoard = new int[3][3];
+        int[][] newBoard = new int[boardSize][boardSize];
         for(int i = 0; i < board.length; i++){
             System.arraycopy(board[i], 0, newBoard[i], 0, board[i].length);
         }
@@ -87,7 +114,7 @@ public class Puzzle8 {
     }
 
     public int[][] moveDown(){
-        int[][] newBoard = new int[3][3];
+        int[][] newBoard = new int[boardSize][boardSize];
         for(int i = 0; i < board.length; i++){
             System.arraycopy(board[i], 0, newBoard[i], 0, board[i].length);
         }
@@ -98,7 +125,7 @@ public class Puzzle8 {
     }
 
     public int[][] moveLeft(){
-        int[][] newBoard = new int[3][3];
+        int[][] newBoard = new int[boardSize][boardSize];
         for(int i = 0; i < board.length; i++){
             System.arraycopy(board[i], 0, newBoard[i], 0, board[i].length);
         }
@@ -109,7 +136,7 @@ public class Puzzle8 {
     }
 
     public int[][] moveRight(){
-        int[][] newBoard = new int[3][3];
+        int[][] newBoard = new int[boardSize][boardSize];
         for(int i = 0; i < board.length; i++){
             System.arraycopy(board[i], 0, newBoard[i], 0, board[i].length);
         }
@@ -122,7 +149,7 @@ public class Puzzle8 {
     public int getHeuristicScore(Puzzle8 goal) {
         int score = 0;
 
-        for(int i = 1; i <= 8; i++){
+        for(int i = 1; i <= (boardSize * boardSize)-1; i++){
             Point p1 = getIndex(i);
             Point p2 = goal.getIndex(i);
             score += Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
@@ -132,6 +159,12 @@ public class Puzzle8 {
     }
 
     public void addState(Puzzle8 state){
+        //check if it is already in the list
+        // for (Puzzle8 p : possibleState) {
+        //     if (p.equals(state)) {
+        //         return;
+        //     }
+        // }
         possibleState.add(state);
     }
 
