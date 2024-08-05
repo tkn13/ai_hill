@@ -3,6 +3,8 @@ public class Main {
         Main m = new Main();
         m.hillCalimingTest();
         m.beamSearchTest();
+        m.BFSTest();
+        m.DFSTest();
     }
 
     public void hillCalimingTest(){
@@ -41,7 +43,7 @@ public class Main {
         int percentCouter = 0;
         int tenPercent = N / 10;
         int completed = 0;
-        System.out.println("Start simulation Puzzle8 "+ N + " rounds");
+        System.out.println("\nStart simulation Puzzle8 "+ N + " rounds");
         long startTime = System.currentTimeMillis();
         while (round < N) {
             round++;
@@ -63,17 +65,15 @@ public class Main {
         System.out.println("Success rate: " + (double) completed / round);
     }
 
-    public void BFSTest() {
-        final int N = 1000;
+    public void BFSTest(){
+        final int N = 10000;
         Puzzle8Slover p = new Puzzle8Slover();
         int round = 0;
         int percentCouter = 0;
         int tenPercent = N / 10;
         int completed = 0;
-        System.out.println("Start simulation Puzzle8 "+ N + " rounds");
-        
+        System.out.println("\nStart simulation Puzzle8 "+ N + " rounds");
         long startTime = System.currentTimeMillis();
-
         while (round < N) {
             round++;
             percentCouter++;
@@ -85,30 +85,24 @@ public class Main {
                 completed++;
             }
         }
-
         long endTime = System.currentTimeMillis();
-        long elapsedTimeMillis = endTime - startTime;
-
-        long elapsedSeconds = elapsedTimeMillis / 1000;
-
-        System.out.println("Time taken: " + elapsedSeconds);
-
+        System.out.println("Time: " + (endTime - startTime) + " ms");
+        System.out.println("\nSimulation completed");
+        System.out.println("BFS");
         System.out.println("Number of rounds: " + round);
         System.out.println("Number of completed: " + completed);
         System.out.println("Success rate: " + (double) completed / round);
     }
 
-    public void DFSTest() {
-        final int N = 100;
+    public void DFSTest(){
+        final int N = 10000;
         Puzzle8Slover p = new Puzzle8Slover();
         int round = 0;
         int percentCouter = 0;
         int tenPercent = N / 10;
         int completed = 0;
-        System.out.println("Start simulation Puzzle8 "+ N + " rounds");
-        
+        System.out.println("\nStart simulation Puzzle8 "+ N + " rounds");
         long startTime = System.currentTimeMillis();
-
         while (round < N) {
             round++;
             percentCouter++;
@@ -120,17 +114,14 @@ public class Main {
                 completed++;
             }
         }
-
         long endTime = System.currentTimeMillis();
-        long elapsedTimeMillis = endTime - startTime;
-
-        long elapsedSeconds = elapsedTimeMillis / 1000;
-        // long remainingMillis = elapsedTimeMillis % 1000;
-
-        System.out.println("Time taken: " + elapsedSeconds);
-
+        System.out.println("Time: " + (endTime - startTime) + " ms");
+        System.out.println("\nSimulation completed");
+        System.out.println("DFS");
         System.out.println("Number of rounds: " + round);
         System.out.println("Number of completed: " + completed);
         System.out.println("Success rate: " + (double) completed / round);
     }
+
+    
 }

@@ -1,8 +1,3 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -143,7 +138,6 @@ public class Puzzle8Slover {
         Puzzle8 current = start;
 
         visited.add(current);
-        int beamWidth = 2;
         int round = 0;
 
         if(devMode){
@@ -319,7 +313,7 @@ public class Puzzle8Slover {
         HashSet<Puzzle8> visited = new HashSet<>();
         Puzzle8 current;
         Queue<Puzzle8> allState = new LinkedList<>();
-        Puzzle8 start = new Puzzle8();
+        Puzzle8 start = goal.generateInitState(goal, 50);
         allState.add(start);
 
         while (!allState.isEmpty()) {
@@ -383,7 +377,7 @@ public class Puzzle8Slover {
         HashSet<Puzzle8> visited = new HashSet<>();
         Puzzle8 current;
         Queue<Puzzle8> allState = new LinkedList<>();
-        Puzzle8 start = new Puzzle8();
+        Puzzle8 start = goal.generateInitState(goal, 50);
         allState.add(start);
 
         while (!allState.isEmpty()) {
@@ -447,7 +441,7 @@ public class Puzzle8Slover {
 
     public boolean DFS(boolean devMode, boolean showSuccessStartState) {
         HashSet<Puzzle8> visited = new HashSet<>();
-        Puzzle8 start = new Puzzle8();
+        Puzzle8 start = goal.generateInitState(goal, 50);
         Puzzle8 current = start;
         Stack<Puzzle8> allState = new Stack<>();
         int round = 0;
