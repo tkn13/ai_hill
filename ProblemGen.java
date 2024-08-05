@@ -42,8 +42,4 @@ public class ProblemGen {
             numBool[i] = false;
         }
     }
-
-    private void interative(boolean[] numBool, int depth, int maxDepth, ArrayList<Integer> currentNum) {
-
-    }
 }
