@@ -377,7 +377,8 @@ public class Puzzle8Slover {
         HashSet<Puzzle8> visited = new HashSet<>();
         Puzzle8 current;
         Queue<Puzzle8> allState = new LinkedList<>();
-        Puzzle8 start = goal.generateInitState(goal, 50);
+        // Puzzle8 start = goal.generateInitState(goal, 50);
+        Puzzle8 start = new Puzzle8(new int[][]{{0,3,4},{1,7,2},{6,8,5}});
         allState.add(start);
 
         while (!allState.isEmpty()) {
@@ -444,7 +445,6 @@ public class Puzzle8Slover {
         Puzzle8 start = goal.generateInitState(goal, 50);
         Puzzle8 current = start;
         Stack<Puzzle8> allState = new Stack<>();
-        int round = 0;
         allState.add(start);
 
         while (!allState.isEmpty()) {
@@ -491,17 +491,64 @@ public class Puzzle8Slover {
                     visited.add(p);
                 }
             }
-
-            // StringBuilder sb = new StringBuilder();
-            // for (int i = 0; i < 3; i++) {
-            // String line = "";
-            // for (Puzzle8 p : current.possibleState) {
-            // line += p.getLine(i) + "\t\t";
-            // }
-            // sb.append(line + "\n");
-            // }
         }
-        System.out.println(round);
+        return false;
+    }
+
+    public boolean DFS(boolean devMode, boolean showSuccessStartState, int depthLimit) {
+        HashSet<Puzzle8> visited = new HashSet<>();
+        // Puzzle8 start = goal.generateInitState(goal, 50);
+        Puzzle8 start = new Puzzle8(new int[][]{{0,3,4},{1,7,2},{6,8,5}});
+        Puzzle8 current = start;
+        Stack<Puzzle8> allState = new Stack<>();
+        allState.add(start);
+
+        while (!allState.isEmpty()) {
+            current = allState.pop();
+            if (current.equals(goal)) {
+                if (devMode)
+                    System.out.println("Goal state found");
+                if (showSuccessStartState) {
+                    System.out.println("Start state");
+                    System.out.println(start);
+                }
+                return true;
+            }
+            if(current.depth >= depthLimit) continue;
+
+            if (current.isCanMoveUp()) {
+                Puzzle8 p = new Puzzle8(current.moveUp());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveDown()) {
+                Puzzle8 p = new Puzzle8(current.moveDown());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveLeft()) {
+                Puzzle8 p = new Puzzle8(current.moveLeft());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveRight()) {
+                Puzzle8 p = new Puzzle8(current.moveRight());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+        }
         return false;
     }
 }
