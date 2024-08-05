@@ -1,7 +1,7 @@
 public class Puzzle8Test {
 
     public static void main(String[] args){
-        Puzzle8 p = new Puzzle8(new int[][]{{1, 2, 3}, {8, 0, 4}, {7, 6, 5}});
+        Puzzle8 p = new Puzzle8(new int[][]{{3, 2, 8}, {4, 1, 7}, {5, 0, 6}});
         System.out.println(p);
 
         if(p.isCanMoveUp()){

@@ -1,5 +1,13 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Puzzle8Slover {
     Puzzle8 goal1 = new Puzzle8(new int[][]{{1, 2, 3},
@@ -19,72 +27,78 @@ public class Puzzle8Slover {
         visited.add(current);
         int perviousScore = Integer.MAX_VALUE;
 
-        if(devMode){
+        if (devMode) {
             System.out.println("Start state");
             System.out.println(current);
             System.out.println("Goal state");
             System.out.println(goal);
         }
 
-        if(current.equals(goal)){
-            if(devMode) System.out.println("The start state is the goal state");
+        if (current.equals(goal)) {
+            if (devMode)
+                System.out.println("The start state is the goal state");
             return false;
         }
 
-        if(devMode) System.out.println("--------------------------------");
-        while(true){
+        if (devMode)
+            System.out.println("--------------------------------");
+        while (true) {
 
-            if(devMode) System.out.println(current);
-            if(devMode) System.out.println("Heuristic score: " + current.getHeuristicScore(goal) + "\n");
+            if (devMode)
+                System.out.println(current);
+            if (devMode)
+                System.out.println("Heuristic score: " + current.getHeuristicScore(goal) + "\n");
 
-            if(current.isCanMoveUp()){
-               Puzzle8 p = new Puzzle8(current.moveUp());
-               if(!visited.contains(p)){
-                   current.addState(p);
-                   visited.add(p);
-               }
+            if (current.isCanMoveUp()) {
+                Puzzle8 p = new Puzzle8(current.moveUp());
+                if (!visited.contains(p)) {
+                    current.addState(p);
+                    visited.add(p);
+                }
             }
-            if(current.isCanMoveDown()){
-               Puzzle8 p = new Puzzle8(current.moveDown());
-               if(!visited.contains(p)){
-                   current.addState(p);
-                   visited.add(p);
-               }
+            if (current.isCanMoveDown()) {
+                Puzzle8 p = new Puzzle8(current.moveDown());
+                if (!visited.contains(p)) {
+                    current.addState(p);
+                    visited.add(p);
+                }
             }
-            if(current.isCanMoveLeft()){
-               Puzzle8 p = new Puzzle8(current.moveLeft());
-               if(!visited.contains(p)){
-                   current.addState(p);
-                   visited.add(p);
-               }
+            if (current.isCanMoveLeft()) {
+                Puzzle8 p = new Puzzle8(current.moveLeft());
+                if (!visited.contains(p)) {
+                    current.addState(p);
+                    visited.add(p);
+                }
             }
-            if(current.isCanMoveRight()){
-               Puzzle8 p = new Puzzle8(current.moveRight());
-               if(!visited.contains(p)){
-                   current.addState(p);
-                   visited.add(p);
-               }
+            if (current.isCanMoveRight()) {
+                Puzzle8 p = new Puzzle8(current.moveRight());
+                if (!visited.contains(p)) {
+                    current.addState(p);
+                    visited.add(p);
+                }
             }
 
-            if(devMode) System.out.println("All possible state");
+            if (devMode)
+                System.out.println("All possible state");
             StringBuilder sb = new StringBuilder();
             for(int i = 0; i < boardSize; i++){
                 String line = "";
-                for(Puzzle8 p : current.possibleState){
+                for (Puzzle8 p : current.possibleState) {
                     line += p.getLine(i) + "\t\t";
                 }
                 sb.append(line + "\n");
             }
-            for(Puzzle8 p : current.possibleState){
+            for (Puzzle8 p : current.possibleState) {
                 sb.append(p.getHeuristicScore(goal) + "\t\t");
             }
-            if(devMode) System.out.println(sb.toString());
-            if(devMode) System.out.println("-------------------------------------");
-            
+            if (devMode)
+                System.out.println(sb.toString());
+            if (devMode)
+                System.out.println("-------------------------------------");
 
             Puzzle8 next = null;
             int bestScore = Integer.MAX_VALUE;
-            for(Puzzle8 p : current.possibleState){
+            for (Puzzle8 p : current.possibleState) {
                 int currentScore = p.getHeuristicScore(goal);
                 if(annealing){
                     if(currentScore <= bestScore && currentScore <= perviousScore){
@@ -201,16 +215,17 @@ public class Puzzle8Slover {
                 if(devMode) System.out.println("All possible state have been visited");
                 return false;
             }
-            if(next.equals(goal)){
-                if(devMode) System.out.println("Goal state found");
-                if(showSuccessStartState){
+            if (next.equals(goal)) {
+                if (devMode)
+                    System.out.println("Goal state found");
+                if (showSuccessStartState) {
                     System.out.println("Start state");
                     System.out.println(start);
                 }
                 return true;
             }
             current = next;
-            //if(devMode) System.out.println("--------------------------------");
+            // if(devMode) System.out.println("--------------------------------");
         }
             
     }
@@ -298,5 +313,201 @@ public class Puzzle8Slover {
         // System.out.println("Best one");
         // System.out.println(bestOne);
         return new Puzzle8(bestOne.board);
+    }
+
+    public boolean BFS(boolean devMode, boolean showSuccessStartState) {
+        HashSet<Puzzle8> visited = new HashSet<>();
+        Puzzle8 current;
+        Queue<Puzzle8> allState = new LinkedList<>();
+        Puzzle8 start = new Puzzle8();
+        allState.add(start);
+
+        while (!allState.isEmpty()) {
+            current = allState.poll();
+            if (current.equals(goal)) {
+                if (devMode)
+                    System.out.println("Goal state found");
+                if (showSuccessStartState) {
+                    System.out.println("Start state");
+                    System.out.println(start);
+                }
+                return true;
+            }
+
+            if (current.isCanMoveUp()) {
+                Puzzle8 p = new Puzzle8(current.moveUp());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveDown()) {
+                Puzzle8 p = new Puzzle8(current.moveDown());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveLeft()) {
+                Puzzle8 p = new Puzzle8(current.moveLeft());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveRight()) {
+                Puzzle8 p = new Puzzle8(current.moveRight());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+
+            // StringBuilder sb = new StringBuilder();
+            // for (int i = 0; i < 3; i++) {
+            // String line = "";
+            // for (Puzzle8 p : current.possibleState) {
+            // line += p.getLine(i) + "\t\t";
+            // }
+            // sb.append(line + "\n");
+            // }
+        }
+        return false;
+    }
+
+    public boolean BFS(boolean devMode, boolean showSuccessStartState,int depthLimit) {
+        HashSet<Puzzle8> visited = new HashSet<>();
+        Puzzle8 current;
+        Queue<Puzzle8> allState = new LinkedList<>();
+        Puzzle8 start = new Puzzle8();
+        allState.add(start);
+
+        while (!allState.isEmpty()) {
+            current = allState.poll();
+            if (current.equals(goal)) {
+                if (devMode)
+                    System.out.println("Goal state found");
+                if (showSuccessStartState) {
+                    System.out.println("Start state");
+                    System.out.println(start);
+                }
+                return true;
+            }
+
+            if(current.depth >= depthLimit) continue;
+
+            if (current.isCanMoveUp()) {
+                Puzzle8 p = new Puzzle8(current.moveUp());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveDown()) {
+                Puzzle8 p = new Puzzle8(current.moveDown());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveLeft()) {
+                Puzzle8 p = new Puzzle8(current.moveLeft());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveRight()) {
+                Puzzle8 p = new Puzzle8(current.moveRight());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+
+            // StringBuilder sb = new StringBuilder();
+            // for (int i = 0; i < 3; i++) {
+            // String line = "";
+            // for (Puzzle8 p : current.possibleState) {
+            // line += p.getLine(i) + "\t\t";
+            // }
+            // sb.append(line + "\n");
+            // }
+        }
+        return false;
+    }
+
+    public boolean DFS(boolean devMode, boolean showSuccessStartState) {
+        HashSet<Puzzle8> visited = new HashSet<>();
+        Puzzle8 start = new Puzzle8();
+        Puzzle8 current = start;
+        Stack<Puzzle8> allState = new Stack<>();
+        int round = 0;
+        allState.add(start);
+
+        while (!allState.isEmpty()) {
+            current = allState.pop();
+            if (current.equals(goal)) {
+                if (devMode)
+                    System.out.println("Goal state found");
+                if (showSuccessStartState) {
+                    System.out.println("Start state");
+                    System.out.println(start);
+                }
+                return true;
+            }
+
+            if (current.isCanMoveUp()) {
+                Puzzle8 p = new Puzzle8(current.moveUp());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveDown()) {
+                Puzzle8 p = new Puzzle8(current.moveDown());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveLeft()) {
+                Puzzle8 p = new Puzzle8(current.moveLeft());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+            if (current.isCanMoveRight()) {
+                Puzzle8 p = new Puzzle8(current.moveRight());
+                if (!visited.contains(p)) {
+                    p.depth = current.depth + 1;
+                    allState.add(p);
+                    visited.add(p);
+                }
+            }
+
+            // StringBuilder sb = new StringBuilder();
+            // for (int i = 0; i < 3; i++) {
+            // String line = "";
+            // for (Puzzle8 p : current.possibleState) {
+            // line += p.getLine(i) + "\t\t";
+            // }
+            // sb.append(line + "\n");
+            // }
+        }
+        System.out.println(round);
+        return false;
     }
 }

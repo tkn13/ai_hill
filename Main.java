@@ -62,4 +62,75 @@ public class Main {
         System.out.println("Number of completed: " + completed);
         System.out.println("Success rate: " + (double) completed / round);
     }
+
+    public void BFSTest() {
+        final int N = 1000;
+        Puzzle8Slover p = new Puzzle8Slover();
+        int round = 0;
+        int percentCouter = 0;
+        int tenPercent = N / 10;
+        int completed = 0;
+        System.out.println("Start simulation Puzzle8 "+ N + " rounds");
+        
+        long startTime = System.currentTimeMillis();
+
+        while (round < N) {
+            round++;
+            percentCouter++;
+            if (percentCouter == tenPercent) {
+                System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
+                percentCouter = 0;
+            }
+            if (p.BFS(false, false, 25)) {
+                completed++;
+            }
+        }
+
+        long endTime = System.currentTimeMillis();
+        long elapsedTimeMillis = endTime - startTime;
+
+        long elapsedSeconds = elapsedTimeMillis / 1000;
+
+        System.out.println("Time taken: " + elapsedSeconds);
+
+        System.out.println("Number of rounds: " + round);
+        System.out.println("Number of completed: " + completed);
+        System.out.println("Success rate: " + (double) completed / round);
+    }
+
+    public void DFSTest() {
+        final int N = 100;
+        Puzzle8Slover p = new Puzzle8Slover();
+        int round = 0;
+        int percentCouter = 0;
+        int tenPercent = N / 10;
+        int completed = 0;
+        System.out.println("Start simulation Puzzle8 "+ N + " rounds");
+        
+        long startTime = System.currentTimeMillis();
+
+        while (round < N) {
+            round++;
+            percentCouter++;
+            if (percentCouter == tenPercent) {
+                System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
+                percentCouter = 0;
+            }
+            if (p.DFS(false, false)) {
+                completed++;
+            }
+        }
+
+        long endTime = System.currentTimeMillis();
+        long elapsedTimeMillis = endTime - startTime;
+
+        long elapsedSeconds = elapsedTimeMillis / 1000;
+        // long remainingMillis = elapsedTimeMillis % 1000;
+
+        System.out.println("Time taken: " + elapsedSeconds);
+
+        System.out.println("Number of rounds: " + round);
+        System.out.println("Number of completed: " + completed);
+        System.out.println("Success rate: " + (double) completed / round);
+    }
 }

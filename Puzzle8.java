@@ -6,6 +6,8 @@ public class Puzzle8 {
     int boardSize;
     Puzzle8 pervious;
     Puzzle8 next;
+    int depth = 0;
+    int maxDepth = Integer.MAX_VALUE;
     ArrayList<Puzzle8> possibleState = new ArrayList<>();
     
 
