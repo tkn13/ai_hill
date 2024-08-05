@@ -10,11 +10,11 @@ public class Puzzle8Slover {
                                             {8,0,4},
                                             {7,6,5}});
     
-    Puzzle8 goal = goal2;
+    Puzzle8 goal = goal1;
 
       public boolean hillCaliming(boolean devMode, boolean showSuccessStartState, boolean annealing, int boardSize) {
         HashSet<Puzzle8> visited = new HashSet<>();
-        Puzzle8 start = new Puzzle8(boardSize);
+        Puzzle8 start = goal.generateInitState(goal, 50);
         Puzzle8 current = start;
         visited.add(current);
         int perviousScore = Integer.MAX_VALUE;
@@ -100,13 +100,13 @@ public class Puzzle8Slover {
                 }
             }
 
-            if(bestScore == Integer.MAX_VALUE){
+            if(current.possibleState.size() == 0){
                 if(devMode) System.out.println("All possible state have been visited");
                 return false;
             }
 
             if(bestScore > current.getHeuristicScore(goal) && !annealing){
-                if(devMode) System.out.println("Local maximum");
+                if(devMode) System.out.println("Local optimal found");
                 return false;
             }
             if(next.equals(goal)){
@@ -125,8 +125,9 @@ public class Puzzle8Slover {
 
     public boolean beamSearch(boolean devMode, boolean showSuccessStartState, int boardSize){
         HashSet<Puzzle8> visited = new HashSet<>();
-        Puzzle8 start = new Puzzle8(boardSize);
+        Puzzle8 start = goal.generateInitState(goal, 50);
         Puzzle8 current = start;
+
         visited.add(current);
         int beamWidth = 2;
         int round = 0;
