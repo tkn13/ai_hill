@@ -2,20 +2,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
+
+    Puzzle8Slover p = new Puzzle8Slover("output/input50.txt");
     public static void main(String[] args) {
         Main m = new Main();
-        for(int i=0;i<1;i++) {
-            // m.hillCalimingTest();
-            // m.beamSearchTest();
-            // m.BFSTest();
-            m.DFSTest();
-        }
-        
+        m.hillCalimingTest();
+        m.beamSearchTest();
+        m.BFSTest();
+        m.DFSTest();
     }
 
     public void hillCalimingTest(){
-        final int N = 1;
-        Puzzle8Slover p = new Puzzle8Slover();
+        final int N = 1000;
         int round = 0;
         int percentCouter = 0;
         int tenPercent = N / 10;
@@ -29,7 +27,7 @@ public class Main {
                 // System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
                 percentCouter = 0;
             }
-            if (p.hillCaliming(false, true, false,  3)) {
+            if (p.hillCaliming(false, false, false,  3, round)) {
                 completed++;
             }
         }
@@ -54,8 +52,7 @@ public class Main {
     }
 
     public void beamSearchTest(){
-        final int N = 250;
-        Puzzle8Slover p = new Puzzle8Slover();
+        final int N = 1000;
         int round = 0;
         int percentCouter = 0;
         int tenPercent = N / 10;
@@ -69,7 +66,7 @@ public class Main {
                 // System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
                 percentCouter = 0;
             }
-            if (p.beamSearch(false, false, 3)) {
+            if (p.beamSearch(false, false, 3, round)) {
                 completed++;
             }
         }
@@ -95,8 +92,7 @@ public class Main {
     }
 
     public void BFSTest(){
-        final int N = 250;
-        Puzzle8Slover p = new Puzzle8Slover();
+        final int N = 1000;
         int round = 0;
         int percentCouter = 0;
         int tenPercent = N / 10;
@@ -110,7 +106,7 @@ public class Main {
                 // System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
                 percentCouter = 0;
             }
-            if (p.BFS(false, false, 15)) {
+            if (p.BFS(false, false, 25, round)) {
                 completed++;
             }
         }
@@ -135,8 +131,7 @@ public class Main {
     }
 
     public void DFSTest(){
-        final int N = 250;
-        Puzzle8Slover p = new Puzzle8Slover();
+        final int N = 1000;
         int round = 0;
         int percentCouter = 0;
         int tenPercent = N / 10;
@@ -150,7 +145,7 @@ public class Main {
                 // System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
                 percentCouter = 0;
             }
-            if (p.DFS(false, false, 15)) {
+            if (p.DFS(false, false, round)) {
                 completed++;
             }
         }
@@ -171,6 +166,38 @@ public class Main {
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the file.");
             e.printStackTrace();
+        }
+    }
+
+
+    public void complexTest(){
+        Puzzle8Slover complex = new Puzzle8Slover("input.txt");
+        System.out.println("Hill Climbing");
+        for(int i = 10; i <= 200; i+=10){
+            complex.fileName = "output/input" + i + ".txt";
+
+            int round = 1000;
+            int completed = 0;
+            for(int j = 0; j < round; j++) {
+                if(complex.hillCaliming(false, false, false, 3, j)) {
+                    completed++;
+                }
+            }
+            System.out.println("Completed: " + ((completed * 1.0) / (round * 1.0)) * 100 + " %");
+        }
+
+        System.out.println("Beam Search");
+        for(int i = 10; i <= 200; i+=10){
+            complex.fileName = "output/input" + i + ".txt";
+
+            int round = 1000;
+            int completed = 0;
+            for(int j = 0; j < round; j++) {
+                if(complex.beamSearch(false, false, 3, j)) {
+                    completed++;
+                }
+            }
+            System.out.println("Completed: " + ((completed * 1.0) / (round * 1.0)) * 100 + " %");
         }
     }
 

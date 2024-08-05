@@ -13,11 +13,18 @@ public class Puzzle8Slover {
                                             {8,0,4},
                                             {7,6,5}});
     
-    Puzzle8 goal = goal1;
+    Puzzle8 goal = goal2;
 
-      public boolean hillCaliming(boolean devMode, boolean showSuccessStartState, boolean annealing, int boardSize) {
+    StateGenerator generator = new StateGenerator();
+    String fileName = "input.txt";
+
+    public Puzzle8Slover(String fileName){
+        this.fileName = fileName;
+    }
+
+      public boolean hillCaliming(boolean devMode, boolean showSuccessStartState, boolean annealing, int boardSize, int r) {
         HashSet<Puzzle8> visited = new HashSet<>();
-        Puzzle8 start = goal.generateInitState(goal, 50);
+        Puzzle8 start = generator.readPuzzle8FromFile(fileName, r);
         Puzzle8 current = start;
         visited.add(current);
         int perviousScore = Integer.MAX_VALUE;
@@ -132,9 +139,9 @@ public class Puzzle8Slover {
         }
    }
 
-    public boolean beamSearch(boolean devMode, boolean showSuccessStartState, int boardSize){
+    public boolean beamSearch(boolean devMode, boolean showSuccessStartState, int boardSize, int r){
         HashSet<Puzzle8> visited = new HashSet<>();
-        Puzzle8 start = goal.generateInitState(goal, 50);
+        Puzzle8 start = generator.readPuzzle8FromFile(fileName, r);
         Puzzle8 current = start;
 
         visited.add(current);
@@ -309,11 +316,11 @@ public class Puzzle8Slover {
         return new Puzzle8(bestOne.board);
     }
 
-    public boolean BFS(boolean devMode, boolean showSuccessStartState) {
+    public boolean BFS(boolean devMode, boolean showSuccessStartState, int r) {
         HashSet<Puzzle8> visited = new HashSet<>();
         Puzzle8 current;
         Queue<Puzzle8> allState = new LinkedList<>();
-        Puzzle8 start = goal.generateInitState(goal, 50);
+        Puzzle8 start = generator.readPuzzle8FromFile(fileName, r);
         allState.add(start);
 
         while (!allState.isEmpty()) {
@@ -373,12 +380,11 @@ public class Puzzle8Slover {
         return false;
     }
 
-    public boolean BFS(boolean devMode, boolean showSuccessStartState,int depthLimit) {
+    public boolean BFS(boolean devMode, boolean showSuccessStartState,int depthLimit, int r) {
         HashSet<Puzzle8> visited = new HashSet<>();
         Puzzle8 current;
         Queue<Puzzle8> allState = new LinkedList<>();
-        // Puzzle8 start = goal.generateInitState(goal, 50);
-        Puzzle8 start = new Puzzle8(new int[][]{{0,3,4},{1,7,2},{6,8,5}});
+        Puzzle8 start = generator.readPuzzle8FromFile(fileName, r);
         allState.add(start);
 
         while (!allState.isEmpty()) {
@@ -440,9 +446,9 @@ public class Puzzle8Slover {
         return false;
     }
 
-    public boolean DFS(boolean devMode, boolean showSuccessStartState) {
+    public boolean DFS(boolean devMode, boolean showSuccessStartState, int r) {
         HashSet<Puzzle8> visited = new HashSet<>();
-        Puzzle8 start = goal.generateInitState(goal, 50);
+        Puzzle8 start = generator.readPuzzle8FromFile(fileName, r);
         Puzzle8 current = start;
         Stack<Puzzle8> allState = new Stack<>();
         allState.add(start);
