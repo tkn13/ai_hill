@@ -8,7 +8,7 @@ public class Main {
     }
 
     public void hillCalimingTest(){
-        final int N = 10000;
+        final int N = 1000;
         Puzzle8Slover p = new Puzzle8Slover();
         int round = 0;
         int percentCouter = 0;
@@ -23,7 +23,7 @@ public class Main {
                 System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
                 percentCouter = 0;
             }
-            if (p.hillCaliming(false, false, false,  3)) {
+            if (p.hillCaliming(false, false, false,  3, round)) {
                 completed++;
             }
         }
@@ -37,7 +37,7 @@ public class Main {
     }
 
     public void beamSearchTest(){
-        final int N = 10000;
+        final int N = 1000;
         Puzzle8Slover p = new Puzzle8Slover();
         int round = 0;
         int percentCouter = 0;
@@ -52,7 +52,7 @@ public class Main {
                 System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
                 percentCouter = 0;
             }
-            if (p.beamSearch(false, false, 3)) {
+            if (p.beamSearch(false, false, 3, round)) {
                 completed++;
             }
         }
@@ -66,7 +66,7 @@ public class Main {
     }
 
     public void BFSTest(){
-        final int N = 10000;
+        final int N = 1000;
         Puzzle8Slover p = new Puzzle8Slover();
         int round = 0;
         int percentCouter = 0;
@@ -81,7 +81,7 @@ public class Main {
                 System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
                 percentCouter = 0;
             }
-            if (p.BFS(false, false, 25)) {
+            if (p.BFS(false, false, 25, round)) {
                 completed++;
             }
         }
@@ -95,7 +95,7 @@ public class Main {
     }
 
     public void DFSTest(){
-        final int N = 10000;
+        final int N = 1000;
         Puzzle8Slover p = new Puzzle8Slover();
         int round = 0;
         int percentCouter = 0;
@@ -110,7 +110,7 @@ public class Main {
                 System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
                 percentCouter = 0;
             }
-            if (p.DFS(false, false)) {
+            if (p.DFS(false, false, round)) {
                 completed++;
             }
         }
