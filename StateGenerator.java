@@ -11,18 +11,24 @@ public class StateGenerator {
                                                 {8, 0, 4},
                                                 {7, 6, 5}});
         StateGenerator generator = new StateGenerator();
-        generator.generateState(1000, goal);
+        
+        for(int i = 10; i <= 500; i+=10){
+            generator.generateState(1000, goal, i);
+        }
+
         //Puzzle8 p = generator.readPuzzle8FromFile("input.txt", 0);
         //System.out.println(p);
     }
    
     
-    public void generateState(int size, Puzzle8 goal) {
+    public void generateState(int size, Puzzle8 goal, int round) {
 
-        String fileName = "input.txt";
+        String mainPath = "output";
+
+        String fileName = mainPath + "/input" + round + ".txt";
     
         for(int i = 0; i < size; i++) {
-            Puzzle8 puzzle = goal.generateInitState(goal, 50);
+            Puzzle8 puzzle = goal.generateInitState(goal, round);
             int[][] state = puzzle.board;
 
             //wrtie to file

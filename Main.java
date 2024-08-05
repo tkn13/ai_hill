@@ -1,15 +1,18 @@
 public class Main {
+
+    Puzzle8Slover p = new Puzzle8Slover("output/input50.txt");
     public static void main(String[] args) {
         Main m = new Main();
         m.hillCalimingTest();
-        m.beamSearchTest();
-        m.BFSTest();
-        m.DFSTest();
+        // m.beamSearchTest();
+        // m.BFSTest();
+        // m.DFSTest();
+
+        //m.complexTest();
     }
 
     public void hillCalimingTest(){
         final int N = 1000;
-        Puzzle8Slover p = new Puzzle8Slover();
         int round = 0;
         int percentCouter = 0;
         int tenPercent = N / 10;
@@ -23,7 +26,7 @@ public class Main {
                 System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
                 percentCouter = 0;
             }
-            if (p.hillCaliming(false, false, false,  3, round)) {
+            if (p.hillCaliming(true, false, false,  3, round)) {
                 completed++;
             }
         }
@@ -38,7 +41,6 @@ public class Main {
 
     public void beamSearchTest(){
         final int N = 1000;
-        Puzzle8Slover p = new Puzzle8Slover();
         int round = 0;
         int percentCouter = 0;
         int tenPercent = N / 10;
@@ -67,7 +69,6 @@ public class Main {
 
     public void BFSTest(){
         final int N = 1000;
-        Puzzle8Slover p = new Puzzle8Slover();
         int round = 0;
         int percentCouter = 0;
         int tenPercent = N / 10;
@@ -96,7 +97,6 @@ public class Main {
 
     public void DFSTest(){
         final int N = 1000;
-        Puzzle8Slover p = new Puzzle8Slover();
         int round = 0;
         int percentCouter = 0;
         int tenPercent = N / 10;
@@ -121,6 +121,38 @@ public class Main {
         System.out.println("Number of rounds: " + round);
         System.out.println("Number of completed: " + completed);
         System.out.println("Success rate: " + (double) completed / round);
+    }
+
+
+    public void complexTest(){
+        Puzzle8Slover complex = new Puzzle8Slover("input.txt");
+        System.out.println("Hill Climbing");
+        for(int i = 10; i <= 200; i+=10){
+            complex.fileName = "output/input" + i + ".txt";
+
+            int round = 1000;
+            int completed = 0;
+            for(int j = 0; j < round; j++) {
+                if(complex.hillCaliming(false, false, false, 3, j)) {
+                    completed++;
+                }
+            }
+            System.out.println("Completed: " + ((completed * 1.0) / (round * 1.0)) * 100 + " %");
+        }
+
+        System.out.println("Beam Search");
+        for(int i = 10; i <= 200; i+=10){
+            complex.fileName = "output/input" + i + ".txt";
+
+            int round = 1000;
+            int completed = 0;
+            for(int j = 0; j < round; j++) {
+                if(complex.beamSearch(false, false, 3, j)) {
+                    completed++;
+                }
+            }
+            System.out.println("Completed: " + ((completed * 1.0) / (round * 1.0)) * 100 + " %");
+        }
     }
 
     
