@@ -4,9 +4,9 @@ public class Main {
     public static void main(String[] args) {
         Main m = new Main();
         m.hillCalimingTest();
-        // m.beamSearchTest();
-        // m.BFSTest();
-        // m.DFSTest();
+        m.beamSearchTest();
+        m.BFSTest();
+        m.DFSTest();
 
         //m.complexTest();
     }
@@ -26,7 +26,7 @@ public class Main {
                 System.out.println("Progress: " + (round / tenPercent) * 10 + "%");
                 percentCouter = 0;
             }
-            if (p.hillCaliming(true, false, false,  3, round)) {
+            if (p.hillCaliming(false, false, false,  3, round)) {
                 completed++;
             }
         }
