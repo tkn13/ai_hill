@@ -1,0 +1,18 @@
+Hill Climbing
+Time: 380 ms Success rate: 0.328
+
+Beam Search
+Time: 648 ms Success rate: 0.728
+
+BFS
+Time: 12632 ms Success rate: 1.000
+
+DFS
+Time: 97364 ms Success rate: 1.000
+
+BFS Limit 15
+Time: 2412 ms Success rate: 0.689
+
+DFS Limit 15
+Time: 1199 ms Success rate: 0.395
+
