@@ -6,16 +6,16 @@ public class Main {
     Puzzle8Slover p = new Puzzle8Slover("output/input50.txt");
     public static void main(String[] args) {
         Main m = new Main();
-        for(int i=0;i<1;i++) {
-            m.hillCalimingTest();
-            m.beamSearchTest();
-            m.BFSTest();
-            m.DFSTest();
-            m.BFSLimitTest(15);
-            m.DFSLimitTest(15);
-        }
+        // for(int i=0;i<1;i++) {
+        //     m.hillCalimingTest();
+        //     m.beamSearchTest();
+        //     m.BFSTest();
+        //     m.DFSTest();
+        //     m.BFSLimitTest(15);
+        //     m.DFSLimitTest(15);
+        // }
 
-        //m.complexTest();
+        m.complexTest();
     }
 
     public void hillCalimingTest(){
@@ -283,6 +283,62 @@ public class Main {
             int completed = 0;
             for(int j = 0; j < round; j++) {
                 if(complex.beamSearch(false, false, 3, j)) {
+                    completed++;
+                }
+            }
+            System.out.println("Completed: " + ((completed * 1.0) / (round * 1.0)) * 100 + " %");
+        }
+
+        // System.out.println("BFS no limit");
+        // for(int i = 10; i <= 200; i+=10){
+        //     complex.fileName = "output/input" + i + ".txt";
+
+        //     int round = 1000;
+        //     int completed = 0;
+        //     for(int j = 0; j < round; j++) {
+        //         if(complex.BFS(false, false, j)) {
+        //             completed++;
+        //         }
+        //     }
+        //     System.out.println("Completed: " + ((completed * 1.0) / (round * 1.0)) * 100 + " %");
+        // }
+
+        System.out.println("BFS limit 15");
+        for(int i = 10; i <= 200; i+=10){
+            complex.fileName = "output/input" + i + ".txt";
+
+            int round = 1000;
+            int completed = 0;
+            for(int j = 0; j < round; j++) {
+                if(complex.BFS(false, false, 15, j)) {
+                    completed++;
+                }
+            }
+            System.out.println("Completed: " + ((completed * 1.0) / (round * 1.0)) * 100 + " %");
+        }
+
+        // System.out.println("DFS no limit");
+        // for(int i = 10; i <= 200; i+=10){
+        //     complex.fileName = "output/input" + i + ".txt";
+
+        //     int round = 1000;
+        //     int completed = 0;
+        //     for(int j = 0; j < round; j++) {
+        //         if(complex.DFS(false, false, j)) {
+        //             completed++;
+        //         }
+        //     }
+        //     System.out.println("Completed: " + ((completed * 1.0) / (round * 1.0)) * 100 + " %");
+        // }
+
+        System.out.println("DFS limit 15");
+        for(int i = 10; i <= 200; i+=10){
+            complex.fileName = "output/input" + i + ".txt";
+
+            int round = 1000;
+            int completed = 0;
+            for(int j = 0; j < round; j++) {
+                if(complex.DFS(false, false, 15, j)) {
                     completed++;
                 }
             }

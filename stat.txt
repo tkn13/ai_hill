@@ -16,3 +16,9 @@ Time: 2412 ms Success rate: 0.689
 DFS Limit 15
 Time: 1199 ms Success rate: 0.395
 
+Hill Climbing
+Time: 466 ms Success rate: 0.328
+
+Beam Search
+Time: 663 ms Success rate: 0.729
+
